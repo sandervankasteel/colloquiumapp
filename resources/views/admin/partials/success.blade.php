@@ -1,3 +1,1 @@
-<div>
-    Something has successfully been updated :D
-</div>
+<div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>

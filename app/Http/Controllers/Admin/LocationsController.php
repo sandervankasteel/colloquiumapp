@@ -10,10 +10,7 @@ class LocationsController extends Controller
 {
     public function overview(Request $request)
     {
-        $data = ['locations' => Location::all()];
-        // TODO check if flash data is set. If this is true, then pass that message to view
-
-        return view('admin/locations/overview', $data);
+        return view('admin/locations/overview', ['locations' => Location::all()]);
     }
 
     public function edit(Location $location)
@@ -26,16 +23,38 @@ class LocationsController extends Controller
         try {
             $location = Location::where('id', $request->input('id'))->first();
 
-            $request->session()->flash('status', $location->name . " has been successfully updated to " . $request->input('name'));
+            $request->session()->flash('success', $location->name . " has been successfully updated to " . $request->input('name'));
 
             $location->name = $request->input('name');
             $location->city_id = $request->input('location');
 
             $location->save();
         } catch(\ErrorException $e) {
-            $request->session()->flash('error', $location->name . " has been successfully updated to " . $request->input('name'));
+            $request->session()->flash('error', "Something went wrong with updating your record");
         }
 
         return redirect('/admin/locations');
+    }
+
+    public function create(Request $request)
+    {
+        return view('admin.locations.create', ['cities' => City::all()]);
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        Location::create([
+            'name' => $request->input('name'),
+            'city_id' => $request->input('city')
+        ]);
+    }
+
+    public function delete()
+    {
+        
     }
 }

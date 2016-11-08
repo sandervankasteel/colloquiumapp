@@ -31,6 +31,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:administrator'], functi
     Route::get('locations', 'Admin\LocationsController@overview');
     Route::get('location/edit/{location}', 'Admin\LocationsController@edit');
     Route::post('location/update', 'Admin\LocationsController@update');
+    Route::get('location/create', 'Admin\LocationsController@create');
+    Route::get('location/store', 'Admin\LocationsController@store');
 
     Route::get('templates', 'Admin\TemplatesController@overview');
     Route::get('template/create', 'Admin\TemplatesController@create');
