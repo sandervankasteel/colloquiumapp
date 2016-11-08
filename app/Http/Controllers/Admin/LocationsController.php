@@ -55,6 +55,6 @@ class LocationsController extends Controller
 
     public function delete()
     {
-        
+
     }
 }
