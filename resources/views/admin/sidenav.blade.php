@@ -4,6 +4,7 @@
         <li><a href="/admin/users"><i class="fa fa-user" ></i> Gebuikers</a></li>
         <li><a href="#"><i class="fa fa-commenting-o"></i> Colloquia</a></li>
         <li><a href="#"><i class="fa fa-folder-open"></i> Templates</a></li>
+        <li><a href="/admin/locations"><i class="fa fa-building"></i> Locations</a></li>
     </ul>
     {{--<ul class="nav nav-sidebar">--}}
         {{--<li><a href="">Nav item</a></li>--}}
