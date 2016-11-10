@@ -37,7 +37,7 @@ class colloquiumController extends Controller
                 ->orderBy('start_date', 'asc')
                 ->get();
         } else {
-            $colloquia = Colloquium::orderBy('start_date', 'asc')->get();
+            $colloquia = Colloquium::orderBy('start_date', 'c')->get();
         }
         return view('user.colloquiaPlanner', compact('colloquia'));
     }

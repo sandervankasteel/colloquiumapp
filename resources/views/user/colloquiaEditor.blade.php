@@ -44,7 +44,7 @@
                                                 @else
                                                     <option value="{{ $room->id }}">
                                                         @endif
-                                                        {{ $room->name }}
+                                                        {{-- $room->building->location->city->name --}}, {{ $room->building->location->name }}, {{ $room->building->abbreviation }}  {{ $room->name }}
                                                     </option>
                                                     @endforeach
                                         </select>
