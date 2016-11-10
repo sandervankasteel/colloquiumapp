@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ColloquiumType;
+use App\Models\Language;
+use App\Models\Room;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Colloquium;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +33,9 @@ class colloquiumController extends Controller
     public function plannerView(Request $request)
     {
         if ($request->approval != null) {
-            $colloquia = Colloquium::where('approval', $request->approval)->orderBy('start_date', 'asc')->get();
+            $colloquia = Colloquium::where('approval', $request->approval)
+                ->orderBy('start_date', 'asc')
+                ->get();
         } else {
             $colloquia = Colloquium::orderBy('start_date', 'asc')->get();
         }
@@ -38,8 +44,25 @@ class colloquiumController extends Controller
 
     public function update(Request $request)
     {
-        $colluquium = Colloquium::where('id', $request->id)
+        Colloquium::where('id', $request->id)
             ->update(['approval' => $request->approval]);
         return back();
+    }
+
+    public function edit($id)
+    {
+        $colloquium = Colloquium::where('id', $id)
+            ->get()
+            ->first();
+        $users = User::orderBy('last_name', 'asc')
+            ->orderBy('first_name', 'asc')
+            ->get();
+        $rooms = Room::orderBy('name', 'asc')
+            ->get();
+        $types = ColloquiumType::orderBy('name', 'asc')
+            ->get();
+        $languages = Language::orderBy('name', 'asc')
+            ->get();
+        return view('user.colloquiaEditor', compact('colloquium', 'users', 'rooms', 'types', 'languages'));
     }
 }
