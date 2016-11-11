@@ -8,8 +8,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\View\View;
 
+/**
+ * Class sendEmail
+ * @package App\Jobs
+ */
 class sendEmail implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
@@ -19,6 +22,11 @@ class sendEmail implements ShouldQueue
      * @var User
      */
     private $user;
+
+    /**
+     * Instance of a
+     * @var Mailtemplate
+     */
     private $mailTemplate;
 
     /**
@@ -49,7 +57,7 @@ class sendEmail implements ShouldQueue
 
 
     /**
-     * Returns a string with a parsed
+     * Returns an HTML string after beeing parsed by Blade
      *
      * @return string
      */
