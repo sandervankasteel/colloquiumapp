@@ -15,20 +15,21 @@ class sendEmail implements ShouldQueue
     use InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * A object to which the
+     * @var User
+     */
+    private $user;
+    private $mailTemplate;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
     public function __construct(Mailtemplate $template, User $user)
     {
-        ob_start();
-        eval('?>'. \Blade::compileString($template->body));
-        $content = ob_get_clean();
-        \Mail::raw($content, function($message) {
-            $message->from('noreply@hanze.nl', 'Hanze Hogeschool');
-
-            $message->to('sandervankasteel@gmail.com');
-        });
+        $this->user = $user;
+        $this->mailTemplate = $template;
     }
 
     /**
@@ -38,6 +39,27 @@ class sendEmail implements ShouldQueue
      */
     public function handle()
     {
-        //
+        // Send the email
+        \Mail::raw($this->parseMailcontent(), function($message) {
+            $message->from('noreply@hanze.nl', 'Hanze Hogeschool');
+
+            $message->to($this->user->email);
+        });
+    }
+
+
+    /**
+     * Returns a string with a parsed
+     *
+     * @return string
+     */
+    private function parseMailcontent()
+    {
+        // TODO Warning this is a very hacky method, needs replacement :(
+        ob_start();
+        $user = $this->user; // needed in case the
+        eval('?>'. \Blade::compileString($this->mailTemplate->body));
+        return ob_get_clean();
+
     }
 }
